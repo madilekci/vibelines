@@ -28,4 +28,24 @@ class QuoteController extends Controller
 
         return redirect()->back()->with('success', 'Quote submitted! Waiting for approval.');
     }
+
+    public function adminIndex()
+    {
+        $quotes = Quote::latest()->get();
+        return view('admin.quotes.index', compact('quotes'));
+    }
+
+    public function toggleApproval(Quote $quote)
+    {
+        $quote->approved = !$quote->approved;
+        $quote->save();
+
+        return redirect()->route('quotes.admin')->with('status', 'Quote updated.');
+    }
+
+    public function destroy(Quote $quote)
+    {
+        $quote->delete();
+        return redirect()->route('quotes.admin')->with('status', 'Quote deleted.');
+    }
 }
