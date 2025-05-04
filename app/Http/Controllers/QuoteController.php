@@ -35,7 +35,7 @@ class QuoteController extends Controller
     public function showRandomQuote()
     {
         // Get a random quote from the database
-        $quote = Quote::inRandomOrder()->first();
+        $quote = Quote::withCount('reactions')->inRandomOrder()->first();
 
         return view('quotes.index', compact('quote'));
     }

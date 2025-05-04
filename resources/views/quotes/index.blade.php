@@ -13,6 +13,11 @@
                 @endif
             </blockquote>
 
+            {{-- Total Reactions Count --}}
+            <p class="mb-3">
+                <strong>Total Reactions:</strong> <span class="badge bg-primary">{{ $quote->reactions_count }}</span>
+            </p>
+
             {{-- Reaction Buttons --}}
             <div class="d-flex justify-content-around mb-4">
                 @php
