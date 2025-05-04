@@ -46,7 +46,8 @@ class QuoteController extends Controller
         $query = Quote::query();
 
         // Search
-        if ($search = $request->input('search')) {
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('text', 'like', "%{$search}%")
                 ->orWhere('author', 'like', "%{$search}%");
@@ -54,7 +55,7 @@ class QuoteController extends Controller
         }
 
         // Filter by approval status
-        if ($request->has('approved') && $request->approved) {
+        if ($request->has('approved') && $request->approved !== null) {
             $query->where('approved', $request->approved);
         }
 
