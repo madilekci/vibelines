@@ -2021,6 +2021,7 @@ class QuoteSeeder extends Seeder
         ];
         // Insert the quotes into the database
         foreach ($quotes as $quote) {
+            $quote['approved'] = true;
             Quote::create($quote);
         }
 
