@@ -7,29 +7,7 @@
     <title>VibeLines</title>
 </head>
 <body class="{{ request()->is('admin/*') ? 'admin-page' : '' }}">
-
-    {{-- Navbar --}}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">VibeLines</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('quotes.create') }}">Submit Quote</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.quotes.index') }}">Admin</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    @include('components.navbar')
 
     {{-- Page Content --}}
     <main id="main_content_container" style="min-height: 100vh;" class="py-4">
