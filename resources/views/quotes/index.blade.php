@@ -1,46 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container d-flex justify-content-center align-items-center vh-100" id="quoteContainer">
+<div class="flex justify-center items-center min-h-screen" id="quoteContainer">
 
-    <div class="card shadow-lg rounded-4" style="width: 24rem;">
-        <div class="card-body text-center">
-            <h5 class="card-title mb-4 text-primary">Quote of the Moment</h5>
+    <div class="bg-white shadow-lg rounded-xl w-96 p-6">
+        <div class="text-center">
+            <h5 class="text-2xl font-semibold text-primary mb-6">Quote of the Moment</h5>
 
-            <blockquote class="blockquote mb-4" style="font-style: italic;">
-                <p class="lead">{{ $quote->text }}</p>
+            <blockquote class="italic text-lg mb-6">
+                <p class="text-xl">{{ $quote->text }}</p>
                 @if ($quote->author)
-                    <footer class="blockquote-footer text-muted">{{ $quote->author }}</footer>
+                    <footer class="text-sm text-gray-600">{{ $quote->author }}</footer>
                 @endif
             </blockquote>
 
             {{-- Total Reactions Count --}}
-            <p class="mb-3">
-                <strong>Total Reactions:</strong>
-                <span class="badge bg-warning text-dark">{{ $quote->reactions_count }}</span>
+            <p class="mb-6">
+                <strong class="text-lg">Total Reactions:</strong>
+                <span class="bg-yellow-300 text-gray-800 px-3 py-1 rounded-full text-sm">{{ $quote->reactions_count }}</span>
             </p>
 
             {{-- Reaction Buttons --}}
-            <div class="d-flex justify-content-around mb-4">
+            <div class="flex justify-around mb-6">
                 @php
                     $emojis = ['😂', '😍', '🔥', '😢', '😡'];
                 @endphp
 
                 @foreach ($emojis as $emoji)
-                    <form action="{{ route('reactions.store', $quote->id) }}" method="POST" class="d-inline">
+                    <form action="{{ route('reactions.store', $quote->id) }}" method="POST" class="inline-block">
                         @csrf
                         <input type="hidden" name="emoji" value="{{ $emoji }}">
-                        <button type="submit" class="btn btn-outline-secondary btn-sm px-3 py-2">
-                            <span style="font-size: 1.5rem;">{{ $emoji }}</span>
+                        <button type="submit" class="btn btn-outline-secondary btn-sm px-3 py-2 transition-all hover:bg-gray-100 hover:border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            <span style="font-size: 2rem; cursor: pointer;">{{ $emoji }}</span>
                         </button>
                     </form>
                 @endforeach
             </div>
 
             {{-- Copy Quote Button --}}
-            <button class="btn btn-outline-primary btn-lg mb-3" id="copyButton" style="font-size: 1.1rem; width: 100%; padding: 0.75rem;">
-                <i class="bi bi-clipboard"></i> Copy Quote
-            </button>
+<button class="w-full bg-blue-500 text-white font-semibold rounded-lg py-3 mb-6 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" id="copyButton">
+    <i class="bi bi-clipboard mr-2"></i> Copy Quote
+</button>
 
             {{-- Copy quote script --}}
             <script>
@@ -91,7 +91,7 @@
             </script>
 
             {{-- See New Quote Button --}}
-            <a href="{{ route('home') }}" class="btn btn-secondary btn-lg mt-4" style="width: 100%; padding: 0.75rem;">
+            <a href="{{ route('home') }}" class="w-full bg-gray-500 text-white font-semibold rounded-lg py-3 px-6 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 text-center">
                 See New Quote
             </a>
         </div>

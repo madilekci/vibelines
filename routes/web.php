@@ -31,6 +31,6 @@ Route::prefix('admin')->name('admin.')->group( function () {
     Route::delete('/quotes/{quote}', [QuoteController::class, 'destroy'])->name('quotes.destroy');
 });
 
-Route::fallback(function () {
-    return redirect()->route('home');
-});
+Route::get('/not-found', function () { return view('errors.404'); })->name('not-found');
+
+Route::fallback(function () { return redirect()->route('/not-found'); })->name('not-found');

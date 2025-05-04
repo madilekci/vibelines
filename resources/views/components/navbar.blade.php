@@ -1,15 +1,17 @@
 {{-- Navbar --}}
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('home') }}">VibeLines</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
+<nav class="bg-white shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <a class="text-xl font-semibold text-gray-800" href="{{ route('home') }}">VibeLines</a>
+        <button class="lg:hidden text-gray-700" type="button" aria-label="Toggle navigation" id="navbarToggler">
+            <span class="block w-6 h-0.5 bg-gray-800 mb-1"></span>
+            <span class="block w-6 h-0.5 bg-gray-800 mb-1"></span>
+            <span class="block w-6 h-0.5 bg-gray-800"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <x-navlink href="{{ route('home') }}" :active="request()->routeIs('home')">Home</x-nav-link>
-                <x-navlink href="{{ route('quotes.create') }}" :active="request()->routeIs('quotes.create')">Submit Quote</x-nav-link>
-                <x-navlink href="{{ route('admin.quotes.index') }}" :active="request()->routeIs('admin.quotes.index')">Admin</x-nav-link>
+        <div class="lg:flex flex-grow items-center hidden" id="navbarNav">
+            <ul class="flex space-x-6 ml-auto">
+                <x-navlink href="{{ route('home') }}" :active="request()->routeIs('home')">Home</x-navlink>
+                <x-navlink href="{{ route('quotes.create') }}" :active="request()->routeIs('quotes.create')">Submit Quote</x-navlink>
+                <x-navlink href="{{ route('admin.quotes.index') }}" :active="request()->routeIs('admin.quotes.index')">Admin</x-navlink>
             </ul>
         </div>
     </div>
