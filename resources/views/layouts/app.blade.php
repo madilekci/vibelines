@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>VibeLines</title>
 </head>
-<body class="{{ request()->is('admin/*') ? 'admin-page' : '' }}">>
+<body class="{{ request()->is('admin/*') ? 'admin-page' : '' }}">
 
     {{-- Navbar --}}
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
