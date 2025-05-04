@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container d-flex justify-content-center align-items-center vh-100">
+<div class="container d-flex justify-content-center align-items-center vh-100" id="quoteContainer">
 
-    <div class="card shadow-lg" style="width: 24rem;">
+    <div class="card shadow-lg rounded-4" style="width: 24rem;">
         <div class="card-body text-center">
-            <h5 class="card-title mb-4">Quote of the Moment</h5>
-            <blockquote class="blockquote mb-4">
-                <p class="lead">“{{ $quote->text }}”</p>
+            <h5 class="card-title mb-4 text-primary">Quote of the Moment</h5>
+
+            <blockquote class="blockquote mb-4" style="font-style: italic;">
+                <p class="lead">{{ $quote->text }}</p>
                 @if ($quote->author)
                     <footer class="blockquote-footer text-muted">{{ $quote->author }}</footer>
                 @endif
@@ -15,7 +16,8 @@
 
             {{-- Total Reactions Count --}}
             <p class="mb-3">
-                <strong>Total Reactions:</strong> <span class="badge bg-primary">{{ $quote->reactions_count }}</span>
+                <strong>Total Reactions:</strong>
+                <span class="badge bg-warning text-dark">{{ $quote->reactions_count }}</span>
             </p>
 
             {{-- Reaction Buttons --}}
@@ -28,7 +30,7 @@
                     <form action="{{ route('reactions.store', $quote->id) }}" method="POST" class="d-inline">
                         @csrf
                         <input type="hidden" name="emoji" value="{{ $emoji }}">
-                        <button type="submit" class="btn btn-outline-primary btn-sm px-3 py-2">
+                        <button type="submit" class="btn btn-outline-secondary btn-sm px-3 py-2">
                             <span style="font-size: 1.5rem;">{{ $emoji }}</span>
                         </button>
                     </form>
@@ -36,8 +38,8 @@
             </div>
 
             {{-- Copy Quote Button --}}
-            <button class="btn btn-outline-primary btn-sm" id="copyButton">
-                <i class="bi bi-clipboard"></i> Copy
+            <button class="btn btn-outline-primary btn-lg mb-3" id="copyButton" style="font-size: 1.1rem; width: 100%; padding: 0.75rem;">
+                <i class="bi bi-clipboard"></i> Copy Quote
             </button>
 
             {{-- Copy quote script --}}
@@ -53,10 +55,10 @@
                         // Check if Clipboard API is supported
                         if (navigator.clipboard) {
                             navigator.clipboard.writeText(decodedText).then(function () {
-                                console.log('Quote copied!');
+                                alert('Quote copied to clipboard!');
                             }).catch(function (error) {
                                 console.error('Copy failed:', error);
-                                console.log('Failed to copy the quote!');
+                                alert('Failed to copy the quote!');
                             });
                         } else {
                             // Fallback for older browsers using execCommand
@@ -67,13 +69,13 @@
                             try {
                                 const successful = document.execCommand('copy');
                                 if (successful) {
-                                    console.log('Quote copied!');
+                                    alert('Quote copied to clipboard!');
                                 } else {
-                                    console.log('Failed to copy the quote!');
+                                    alert('Failed to copy the quote!');
                                 }
                             } catch (err) {
                                 console.error('Error using execCommand:', err);
-                                console.log('Failed to copy the quote!');
+                                alert('Failed to copy the quote!');
                             }
                             document.body.removeChild(textArea);
                         }
@@ -89,7 +91,9 @@
             </script>
 
             {{-- See New Quote Button --}}
-            <a href="{{ route('home') }}" class="btn btn-secondary btn-lg">See New</a>
+            <a href="{{ route('home') }}" class="btn btn-secondary btn-lg mt-4" style="width: 100%; padding: 0.75rem;">
+                See New Quote
+            </a>
         </div>
     </div>
 
