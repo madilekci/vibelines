@@ -35,6 +35,59 @@
                 @endforeach
             </div>
 
+            {{-- Copy Quote Button --}}
+            <button class="btn btn-outline-primary btn-sm" id="copyButton">
+                <i class="bi bi-clipboard"></i> Copy
+            </button>
+
+            {{-- Copy quote script --}}
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const copyButton = document.getElementById('copyButton');
+                    copyButton.addEventListener('click', function () {
+                        const quoteText = "{{ $quote->text }}";  // Dynamically fetch the quote text
+
+                        // Decode HTML entities (e.g., &#039; -> ')
+                        const decodedText = decodeHTML(quoteText);
+
+                        // Check if Clipboard API is supported
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(decodedText).then(function () {
+                                console.log('Quote copied!');
+                            }).catch(function (error) {
+                                console.error('Copy failed:', error);
+                                console.log('Failed to copy the quote!');
+                            });
+                        } else {
+                            // Fallback for older browsers using execCommand
+                            const textArea = document.createElement('textarea');
+                            textArea.value = decodedText;
+                            document.body.appendChild(textArea);
+                            textArea.select();
+                            try {
+                                const successful = document.execCommand('copy');
+                                if (successful) {
+                                    console.log('Quote copied!');
+                                } else {
+                                    console.log('Failed to copy the quote!');
+                                }
+                            } catch (err) {
+                                console.error('Error using execCommand:', err);
+                                console.log('Failed to copy the quote!');
+                            }
+                            document.body.removeChild(textArea);
+                        }
+                    });
+                });
+
+                // Function to decode HTML entities
+                function decodeHTML(html) {
+                    var txt = document.createElement('textarea');
+                    txt.innerHTML = html;
+                    return txt.value;
+                }
+            </script>
+
             {{-- See New Quote Button --}}
             <a href="{{ route('home') }}" class="btn btn-secondary btn-lg">See New</a>
         </div>
