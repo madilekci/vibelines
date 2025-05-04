@@ -1,45 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-    {{-- Quote Submission Form --}}
-    <form action="{{ route('quotes.store') }}" method="POST" class="mb-8 bg-white p-4 rounded shadow">
-        @csrf
-        <div class="mb-4">
-            <label for="text" class="block font-bold mb-1">Your Quote</label>
-            <textarea name="text" id="text" rows="3" class="w-full border rounded p-2" required></textarea>
-        </div>
-        <div class="mb-4">
-            <label for="author" class="block font-bold mb-1">Author (optional)</label>
-            <input type="text" name="author" id="author" class="w-full border rounded p-2">
-        </div>
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit Quote</button>
-    </form>
+<div class="container d-flex justify-content-center align-items-center vh-100">
 
-    {{-- Display Quotes --}}
-    @foreach ($quotes as $quote)
-        <div class="bg-white p-4 mb-4 rounded shadow">
-            <p class="text-lg mb-2">"{{ $quote->text }}"</p>
-            @if ($quote->author)
-                <p class="text-sm text-gray-600">— {{ $quote->author }}</p>
-            @endif
+    <div class="card shadow-lg" style="width: 24rem;">
+        <div class="card-body text-center">
+            <h5 class="card-title mb-4">Quote of the Moment</h5>
+            <blockquote class="blockquote mb-4">
+                <p class="lead">“{{ $quote->text }}”</p>
+                @if ($quote->author)
+                    <footer class="blockquote-footer text-muted">{{ $quote->author }}</footer>
+                @endif
+            </blockquote>
 
-            {{-- Emoji Reaction Buttons --}}
-            <div class="mt-4 flex space-x-2">
+            {{-- Reaction Buttons --}}
+            <div class="d-flex justify-content-around mb-4">
                 @php
                     $emojis = ['😂', '😍', '🔥', '😢', '😡'];
-                    $reactionCounts = $quote->reactions->groupBy('emoji')->map->count();
                 @endphp
 
                 @foreach ($emojis as $emoji)
-                    <form action="{{ route('reactions.store', $quote->id) }}" method="POST">
+                    <form action="{{ route('reactions.store', $quote->id) }}" method="POST" class="d-inline">
                         @csrf
                         <input type="hidden" name="emoji" value="{{ $emoji }}">
-                        <button type="submit" class="px-2 py-1 border rounded hover:bg-gray-100">
-                            {{ $emoji }} {{ $reactionCounts[$emoji] ?? 0 }}
+                        <button type="submit" class="btn btn-outline-primary btn-sm px-3 py-2">
+                            <span style="font-size: 1.5rem;">{{ $emoji }}</span>
                         </button>
                     </form>
                 @endforeach
             </div>
+
+            {{-- See New Quote Button --}}
+            <a href="{{ route('home') }}" class="btn btn-secondary btn-lg">See New</a>
         </div>
-    @endforeach
+    </div>
+
+</div>
 @endsection
